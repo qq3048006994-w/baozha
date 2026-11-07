@@ -1,0 +1,22 @@
+:root{font-family:"Noto Serif CJK SC","Songti SC","SimSun",serif;color:#e8dfc9;background:#131e18;font-synthesis:none;text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;font-weight:400;--paper:#e8dfc9;--ink:#222e26;--gold:#ae956a;--red:#9d302b;--muted:#b0ad99;--sans:"PingFang SC","Microsoft YaHei",sans-serif}
+*{box-sizing:border-box}
+body{margin:0;min-width:320px}
+button,input,select{font:inherit}
+button{cursor:pointer;color:inherit}
+button:disabled{cursor:default;opacity:.42}
+button,a,input,select{-webkit-tap-highlight-color:transparent}
+button:focus-visible,select:focus-visible,input:focus-visible,a:focus-visible,[tabindex="-1"]:focus-visible{outline:2px solid #bd8d48;outline-offset:5px}
+button{transition:background .2s,color .2s,transform .2s}
+button:active:not(:disabled){transform:translateY(1px)}
+a{color:inherit}
+h1,h2,h3,p{margin:0}
+button{border:0}
+select{padding:10px 14px;background:#f4eddc;border:1px solid #b3a990;border-radius:2px;color:#293b30;max-width:100%}
+input[type=checkbox]{accent-color:#8e352b;width:18px;height:18px}
+::selection{background:#9d302b;color:#f5e9d1}
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-thumb{background:#91816a;border-radius:5px}
+::-webkit-scrollbar-track{background:transparent}
+.reduce-motion *,.reduce-motion *:before,.reduce-motion *:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+}

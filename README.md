@@ -1,16 +1,111 @@
-# React + Vite
+# 《开铡》
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+一纸诉状，四堂审判。公堂之上，究竟是王法，还是王权？
 
-Currently, two official plugins are available:
+河南大学校园黑客松互动叙事项目。玩家扮演包拯，围绕秦香莲诉陈世美一案进行四轮审理。采用 React + Vite + JavaScript，无后端、无需密钥。本作改编自民间故事，原创证物和流程不代表真实历史档案。
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 启动（Windows / macOS / Linux）
 
-## React Compiler
+需要 Node.js 24 LTS（本轮在 24.22.1 验证）及 npm。下载源码后，在有 `package.json` 的项目文件夹打开终端：
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+```bash
+npm ci
+npm run dev -- --host 0.0.0.0 --port 5173 --strictPort
+```
 
-## Expanding the ESLint configuration
+在自己的电脑打开浏览器，输入 `http://localhost:5173/`。终端保持运行；按 `Ctrl+C` 停止。若端口被占用，先停止自己之前开启的开发服务器。云端修改不会自动同步到你电脑的旧项目，请使用本次交付的源码。
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```bash
+npm run build       # 生成 dist/ 静态产物
+npm run preview     # 本地检查生产构建
+npm run lint        # ESLint
+npm test            # Node 内置测试，无额外测试依赖
+```
+
+`dist/` 可以部署到静态网站服务；不能通过双击其中的 HTML 正确运行 ES 模块应用。当前默认按站点根路径部署，子目录部署时需要对应调整 Vite base。
+
+## 第一版可以做什么
+
+- 开场叙事、四轮审案、不同询问与阶段选择。
+- 证物取得、查看、呈堂及两两关联。
+- 婚姻、隐瞒婚史、持刀追逐、授意追杀四项独立事实认定。
+- 针对具体供词呈证质询，错误材料会遭到反驳。
+- 案卷、人物志、时间线、审理与选择记录。
+- 四个结局：铁面昭雪、暂缓再审、权势压案、证据不足的错判。
+- 本地自动存档、刷新恢复、继续及重新审理。
+- 文字速度、减少动画、键盘和小屏布局。
+- 在设置中导入指定人物、公堂与首页原图。
+
+不同询问影响取得的材料；阶段选择影响压力与记录；最终结局结合证据链与裁决决定。压力影响氛围和记录，不能代替证据。尚无音乐、配音、自由输入审问或真实历史法律模拟。
+
+## 图片素材：当前限制与接入
+
+聊天内的人物、场景图片没有可读取的本地文件路径，**本次未假装将它们接入**。当前使用明确标注的程序公堂示意图与姓名印记，无替代人物面孔。人物原始素材与既有模板资源均未删除。
+
+方式一，浏览器直接导入：
+
+1. 首页打开“设置与素材”。
+2. 将每张原图导入对应的角色、公堂或首页位置。
+3. 多角度设定图勾选对应选项，按预设区域裁取正面头像；独立头像/立绘取消勾选。
+4. PNG、JPG、WebP，单张不超过 12MB。图片保存在当前浏览器 IndexedDB 中，刷新后会恢复。
+
+浏览器导入只影响当前浏览器与站点地址，不修改源码，也不上传网络。更换浏览器、端口、域名或清理站点数据后需要重新导入。
+
+方式二，随项目分发：
+
+将原图复制到 `public/assets/characters/`、`public/assets/backgrounds/`，然后修改 `src/data/assets.js` 对应条目的 `url`，例如：
+
+```js
+court: { url: '/assets/backgrounds/court.jpg', label: '开封府公堂', sheet: false },
+bao: { url: '/assets/characters/bao.jpg', label: '包拯', sheet: true },
+```
+
+这些是约定示例路径，不表示文件已经存在。人物设定图裁切区域在 `src/data/characters.js` 的 `crop` 中，格式为图片宽高的归一化 `[x, y, width, height]`。不会重绘、更换脸、改服饰或删除原图。剧情拼图应先选取适合的单一镜头再接入。
+
+## 怎样完成完整证据路线
+
+此部分含流程提示，可在自行体验后阅读：
+
+1. 第一审：询问诉由、查看信物、发文均州。进入第二审时，前审安排的回文抵达。
+2. 第二审：在证物房关联“旧日信物 + 均州核验回文 → 原配婚姻”；查看遗刀、查访现场，关联“韩琪遗刀 + 三官堂勘验 → 持刀追逐”；调取出入簿。
+3. 第三审：核对招亲申报、查门吏证言。关联“均州回文 + 招亲申报 → 隐瞒婚史”“出入簿 + 门吏证言 → 授意追杀”。
+4. 第三审点击“选择供词，呈证质询”，对婚姻否认呈均州回文，对未曾欺瞒呈招亲申报，对不知韩琪行踪呈门吏证言。完成关联后，质证才会成立。
+5. 第四审复核四项事实，选择依法定罪并确认落印，可达到铁面昭雪。
+
+漏查时可暂缓再审；强行定罪则触发证据不足的错判；选择遵旨压案会进入权势压案。四种结局均可正常操作到达。暂缓是本版本的独立结局，不包含第五审。
+
+## 存档与操作
+
+进度键名：`kaizha.save.v1`；设置键名：`kaizha.settings.v1`。存档仅存在当前浏览器，不跨设备同步。刷新后先回首页，点击“继续案件”恢复。重新开案会确认后覆盖本游戏进度，保留设置和导入图片，不清空其他网站数据。
+
+对话可点击“显示完整台词”跳过逐字效果；未聚焦按钮或输入框时 Enter 可显示完整台词，已经显示完整时聚焦问话区域。Tab 移动焦点，Esc 关闭案卷。跳过不会代替你选择或自动取证。
+
+## 修改台词与结构
+
+- `src/data/chapters.js`：四审的问话、回应、解锁条件和阶段选择。
+- `src/data/evidence.js`：证物、证明边界、关联与事实要求。
+- `src/data/characters.js`：人物资料与图片裁切。
+- `src/data/endings.js`：结局文案。
+- `src/engine/game.js`：纯状态更新、条件校验与结局判定。
+- `src/utils/saveManager.js`：存档校验与错误恢复。
+- `src/utils/assetStore.js`：浏览器图片存储。
+- `src/components/`：公堂示意、对话、模态框和案卷面板。
+- `src/App.css` / `src/styles.css`：界面与全局样式。
+
+修改文字时保留已有 ID；改动解锁条件或证据规则后运行 `npm test`，并重新实际走流程。不要把台词文本当作状态标识。
+
+## 验证与开发记录
+
+见 `docs/DEVELOPMENT.md`。首次实现阶段未提交或推送；本次交付获得用户授权，仅提交并推送到新分支 `kaizha-first-version`，保留 `main`。原有文件均保留，依赖版本和锁文件未升级；只为测试新增 npm 脚本。此分支交付当前可玩版本，人物和公堂原图待补，可先通过“设置与素材”在本机导入。
+
+### 可选：复跑浏览器流程测试
+
+`tests/browser.mjs` 保存了本轮实际使用的操作路线。它需要测试机器已经提供 Playwright 和 Chromium；游戏运行本身不需要它们，本项目没有为此新增依赖。
+
+本云环境可在开发服务启动后运行：
+
+```bash
+PLAYWRIGHT_MODULE=/workspace/onboarding-tools/node_modules/playwright/index.mjs CHROMIUM_PATH=/usr/bin/chromium node tests/browser.mjs
+```
+
+默认访问本机 5173 端口，截图保存到 `/tmp/kaizha-validation`。可用 `KAIZHA_URL`、`KAIZHA_ARTIFACTS` 指定测试目标与输出目录。Windows 上如未准备浏览器测试工具，先使用 `npm test` 并按上述玩法说明手动验收，无需为了运行游戏额外安装 Playwright。
